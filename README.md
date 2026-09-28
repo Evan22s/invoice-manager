@@ -1,4 +1,4 @@
-# Abundant Air — Customer & Invoice Manager
+#  — Customer & Invoice Manager
 
 A small web app for tracking customers and their invoices. Built for a Hootcamp
 assignment on using AI tools to build a full web application with minimal
