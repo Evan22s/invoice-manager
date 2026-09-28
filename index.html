@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Abundant Air — Customer &amp; Invoice Manager</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- ===========================================================
+       AUTH SCREEN
+       Shown when nobody is logged in. Has two tabs: Log in / Register.
+       =========================================================== -->
+  <div id="auth-view" class="auth-screen">
+    <div class="auth-card">
+      <div class="brand">
+        <span class="brand-mark">AA</span>
+        <div>
+          <h1>Abundant Air</h1>
+          <p>Customer &amp; Invoice Manager</p>
+        </div>
+      </div>
+
+      <div class="tab-row" role="tablist">
+        <button id="tab-login" class="tab is-active" type="button">Log in</button>
+        <button id="tab-register" class="tab" type="button">Register</button>
+      </div>
+
+      <!-- Log in form -->
+      <form id="login-form" class="auth-form">
+        <label for="login-email">Email</label>
+        <input id="login-email" type="email" autocomplete="email" required />
+
+        <label for="login-password">Password</label>
+        <input id="login-password" type="password" autocomplete="current-password" required />
+
+        <button type="submit" class="btn btn-primary">Log in</button>
+      </form>
+
+      <!-- Register form (hidden until the Register tab is clicked) -->
+      <form id="register-form" class="auth-form" hidden>
+        <label for="register-email">Email</label>
+        <input id="register-email" type="email" autocomplete="email" required />
+
+        <label for="register-password">Password</label>
+        <input id="register-password" type="password" autocomplete="new-password" minlength="6" required />
+        <p class="hint">At least 6 characters.</p>
+
+        <button type="submit" class="btn btn-primary">Create account</button>
+      </form>
+
+      <p id="auth-message" class="auth-message" role="status"></p>
+    </div>
+  </div>
+
+  <!-- ===========================================================
+       MAIN APP
+       Shown once a user is logged in.
+       =========================================================== -->
+  <div id="app-view" class="app-shell" hidden>
+
+    <aside class="sidebar">
+      <div class="brand">
+        <span class="brand-mark">AA</span>
+        <div>
+          <h1>Abundant Air</h1>
+          <p>Invoice Manager</p>
+        </div>
+      </div>
+
+      <nav class="nav">
+        <button class="nav-link is-active" data-page="customers" type="button">Customers</button>
+        <button class="nav-link" data-page="invoices" type="button">Invoices</button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <p id="current-user-email" class="current-user"></p>
+        <button id="logout-btn" class="btn btn-muted" type="button">Log out</button>
+      </div>
+    </aside>
+
+    <main class="content">
+
+      <!-- ---------------- Customers page ---------------- -->
+      <section id="page-customers" class="page">
+        <header class="page-header">
+          <h2>Customers</h2>
+          <button id="new-customer-btn" class="btn btn-primary" type="button">Add customer</button>
+        </header>
+
+        <!-- Add / edit customer form, hidden until requested -->
+        <form id="customer-form" class="record-form" hidden>
+          <input type="hidden" id="customer-id" />
+          <div class="form-grid">
+            <label>
+              Name *
+              <input id="customer-name" type="text" required />
+            </label>
+            <label>
+              Phone
+              <input id="customer-phone" type="text" />
+            </label>
+            <label>
+              Email
+              <input id="customer-email" type="email" />
+            </label>
+            <label class="span-2">
+              Address
+              <input id="customer-address" type="text" />
+            </label>
+          </div>
+          <div class="form-actions">
+            <button type="button" class="btn btn-muted" id="cancel-customer-btn">Cancel</button>
+            <button type="submit" class="btn btn-primary" id="save-customer-btn">Save customer</button>
+          </div>
+        </form>
+
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Phone</th>
+              <th>Email</th>
+              <th>Address</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="customers-tbody">
+            <!-- Rows are inserted here by app.js -->
+          </tbody>
+        </table>
+        <p id="customers-empty" class="empty-state" hidden>No customers yet. Add your first one above.</p>
+      </section>
+
+      <!-- ---------------- Invoices page ---------------- -->
+      <section id="page-invoices" class="page" hidden>
+        <header class="page-header">
+          <h2>Invoices</h2>
+          <button id="new-invoice-btn" class="btn btn-primary" type="button">Add invoice</button>
+        </header>
+
+        <!-- Add / edit invoice form, hidden until requested -->
+        <form id="invoice-form" class="record-form" hidden>
+          <input type="hidden" id="invoice-id" />
+          <div class="form-grid">
+            <label>
+              Customer *
+              <select id="invoice-customer" required></select>
+            </label>
+            <label>
+              Date
+              <input id="invoice-date" type="date" />
+            </label>
+            <label>
+              Amount *
+              <input id="invoice-amount" type="number" step="0.01" min="0" required />
+            </label>
+            <label>
+              Status
+              <select id="invoice-status">
+                <option value="Unpaid">Unpaid</option>
+                <option value="Partial">Partial</option>
+                <option value="Paid">Paid</option>
+                <option value="Overdue">Overdue</option>
+              </select>
+            </label>
+            <label class="span-2">
+              Notes
+              <input id="invoice-notes" type="text" />
+            </label>
+          </div>
+          <div class="form-actions">
+            <button type="button" class="btn btn-muted" id="cancel-invoice-btn">Cancel</button>
+            <button type="submit" class="btn btn-primary" id="save-invoice-btn">Save invoice</button>
+          </div>
+        </form>
+
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Customer</th>
+              <th>Date</th>
+              <th>Amount</th>
+              <th>Status</th>
+              <th>Notes</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="invoices-tbody">
+            <!-- Rows are inserted here by app.js -->
+          </tbody>
+        </table>
+        <p id="invoices-empty" class="empty-state" hidden>No invoices yet. Add your first one above.</p>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Supabase's client library, loaded from their CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <!-- Your own Supabase project URL/key (fill in before deploying) -->
+  <script src="config.js"></script>
+  <!-- All the app logic -->
+  <script src="app.js"></script>
+</body>
+</html>
