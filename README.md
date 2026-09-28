@@ -23,7 +23,7 @@ customers and invoices, with real accounts and a real cloud database.
 ## Live app
 
 **Deployed link:** _add your Netlify URL here after deploying, e.g._
-`https://abundant-air-invoices.netlify.app`
+`https://fanciful-baklava-434f58.netlify.app`
 
 ## Tech stack
 
